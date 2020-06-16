@@ -149,3 +149,25 @@ public class SinglyLinkedList<T>
         newNode.Next = null;
     }
 }
+
+//원형 이중 링크드 리스트 구현 준비
+//노드이름은 DoublyLinkedNode<T>
+//리스트 이름은 DoublyLinkedList<T>
+//Add(DoublyLinkedNode<T> newNode) -> 가장 끝에 새로운 노드 추가
+//AddAfter(DoublyLinkedNode<T> currentNode, DoublyLinkedNode<T> newNode) -> CurrentNode 뒤에 newNode 연결 추가
+//Remove(DoublyLinkedNode<T> removeNode) -> 해당 노드 제거
+// DoublyLinkedNode<T> GetNode(int index) -> 해당 Index에 있는 Node 반환
+//int Count() -> 해당 리스트의 배열카운트 반환
+
+public class DoublyLinkedNode<T>
+{
+    public DoublyLinkedNode<T> PrevNode{get; set;}
+    public DoublyLinkedNode<T> NextNodeP{get; set;}
+
+    public T Data;
+
+    public DoublyLinkedNode(T data)
+    {
+        Data = data;
+    }
+}
