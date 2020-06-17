@@ -162,12 +162,112 @@ public class SinglyLinkedList<T>
 public class DoublyLinkedNode<T>
 {
     public DoublyLinkedNode<T> PrevNode{get; set;}
-    public DoublyLinkedNode<T> NextNodeP{get; set;}
-
+    public DoublyLinkedNode<T> NextNode{get; set;}
     public T Data;
 
     public DoublyLinkedNode(T data)
     {
         Data = data;
+    }
+}
+
+public class DoublyLinkedList<T>
+{
+    public DoublyLinkedNode<T> mHead = null;
+    public int Count => GetCount();
+    public void Add(DoublyLinkedNode<T> newNode)
+    {
+        if(mHead == null)
+        {
+            mHead = newNode;
+            mHead.PrevNode = newNode;
+            mHead.NextNode = newNode;
+            return;
+        }
+
+        DoublyLinkedNode<T> prevNode = mHead.PrevNode;
+        
+        prevNode.NextNode = newNode;
+        mHead.PrevNode = newNode;
+        newNode.PrevNode = prevNode;
+        newNode.NextNode = mHead;
+    }
+
+    public void AddAfter(DoublyLinkedNode<T> currentNode, DoublyLinkedNode<T> newNode)
+    {
+        if(mHead == null)
+        {
+            return;
+        }
+
+        var selectedNode = mHead;
+        while(selectedNode.NextNode != mHead)
+        {
+            if(currentNode == selectedNode)
+            {
+                newNode.PrevNode = selectedNode;
+                newNode.NextNode = selectedNode.NextNode;
+                selectedNode.NextNode.PrevNode = newNode;
+                selectedNode.NextNode = newNode;
+                return;
+            }
+            selectedNode = selectedNode.NextNode;
+        }
+    }
+
+    public void Remove(DoublyLinkedNode<T> removeNode)
+    {
+        if(mHead == null)
+        {
+            return;
+        }
+
+        var selectedNode = mHead;
+        while(selectedNode.NextNode != mHead)
+        {
+            if(removeNode == selectedNode)
+            {
+                selectedNode.NextNode.PrevNode = selectedNode.PrevNode;
+                selectedNode.PrevNode.NextNode = selectedNode.NextNode;
+                selectedNode = null;
+                return;
+            }
+            selectedNode = selectedNode.NextNode;
+        }
+    }
+
+    public DoublyLinkedNode<T> GetNode(int index)
+    {
+        //인덱스값을 넘어가더라도 원형이니까 뱅글뱅글 돌아서 노드를 반환해야 하나?
+        //아니면 null을 반환해야 하나..
+        if(mHead == null)
+        {
+            return null;
+        }
+        var currentNode = mHead;
+        for(int i = 0; i < index; ++i)
+        {
+            currentNode = currentNode.NextNode;
+        }
+
+        return currentNode;
+    }
+
+    private int GetCount()
+    {
+        if(mHead == null)
+        {
+            return 0;
+        }
+
+        int count = 1;
+
+        var selectedNode = mHead;
+        while(selectedNode.NextNode != mHead)
+        {
+            ++count;
+            selectedNode = selectedNode.NextNode;
+        }
+        return count;
     }
 }
